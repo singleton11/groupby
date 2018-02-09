@@ -2,8 +2,12 @@ POST http://localhost:8080/users/register
 Content-Type: application/json
 
 {
-    "email": "betrayer11+1@gmail.com",
+    "email": "gavnina",
     "password": "password"
 }
+
+###
+
+GET http://localhost:8080/users/50/
 
 ###
