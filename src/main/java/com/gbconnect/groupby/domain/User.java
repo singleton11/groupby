@@ -6,24 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "users_sequence", sequenceName = "users_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
     private Long id;
     private String username;
     private String password;
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
     private List<Role> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
