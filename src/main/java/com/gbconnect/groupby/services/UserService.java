@@ -54,4 +54,8 @@ public class UserService implements UserDetailsService {
                 .credentialsNonExpired(userBuilt.isCredentialsNonExpired())
                 .build();
     }
+
+    public boolean checkPassword(User user, String password) {
+        return user.getPassword().equals(password);
+    }
 }

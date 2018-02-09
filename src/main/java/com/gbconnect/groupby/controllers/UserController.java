@@ -1,7 +1,10 @@
 package com.gbconnect.groupby.controllers;
 
+import com.gbconnect.groupby.domain.Login;
+import com.gbconnect.groupby.domain.Token;
 import com.gbconnect.groupby.domain.UserRequest;
 import com.gbconnect.groupby.domain.UserResponse;
+import com.gbconnect.groupby.services.JWTService;
 import com.gbconnect.groupby.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,15 +18,22 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
     private final UserService userService;
+    private final JWTService jwtService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JWTService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @RequestMapping("/users/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse register(@Valid @RequestBody UserRequest user) {
-        return this.userService.createUser(user);
+        return userService.createUser(user);
+    }
+
+    @RequestMapping("/users/getToken")
+    public Token getJWTToken(@Valid @RequestBody Login login) {
+        return jwtService.generateToken(login);
     }
 }

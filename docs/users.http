@@ -8,6 +8,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/users/50/
+POST http://localhost:8080/users/getToken
+Content-Type: application/json
+
+{
+    "email": "betrayer1+1@gmail.com",
+    "password": "password"
+}
 
 ###
