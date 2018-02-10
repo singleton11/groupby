@@ -8,6 +8,7 @@ import com.gbconnect.groupby.repositories.RoleRepository;
 import com.gbconnect.groupby.repositories.UserRepository;
 import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,7 +56,21 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public boolean checkPassword(User user, String password) {
+    public boolean checkPassword(UserDetails user, String password) {
         return user.getPassword().equals(password);
+    }
+
+    public UserResponse getCurrentUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return UserResponse
+                .builder()
+                .email(user.getUsername())
+                .id(user.getId())
+                .credentialsNonExpired(user.isCredentialsNonExpired())
+                .accountNonLocked(user.isAccountNonLocked())
+                .accountNonExpired(user.isAccountNonExpired())
+                .enabled(user.isEnabled())
+                .authorities(user.getAuthorities())
+                .build();
     }
 }

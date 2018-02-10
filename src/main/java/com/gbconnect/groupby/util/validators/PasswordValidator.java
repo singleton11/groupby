@@ -19,6 +19,6 @@ public class PasswordValidator implements ConstraintValidator<Password, Object> 
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
         Login login = (Login) obj;
         UserDetails userDetails = this.userService.loadUserByUsername(login.getEmail());
-        return userDetails != null && userDetails.getPassword().equals(login.getPassword());
+        return userDetails != null && userService.checkPassword(userDetails, login.getPassword());
     }
 }

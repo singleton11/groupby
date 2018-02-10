@@ -36,4 +36,9 @@ public class UserController {
     public Token getJWTToken(@Valid @RequestBody Login login) {
         return jwtService.generateToken(login);
     }
+
+    @RequestMapping("/users/profile")
+    public UserResponse getUserProfile() {
+        return userService.getCurrentUser();
+    }
 }

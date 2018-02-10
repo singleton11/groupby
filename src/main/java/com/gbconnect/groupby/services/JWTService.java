@@ -3,6 +3,7 @@ package com.gbconnect.groupby.services;
 import com.gbconnect.groupby.domain.Login;
 import com.gbconnect.groupby.domain.Token;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,14 @@ public class JWTService {
         return Token.builder()
                 .key(Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, "[B@1d9af731").compact())
                 .build();
+    }
+
+    public UserDetails getUserByToken(String token) {
+        try {
+            Jws<Claims> jws = Jwts.parser().setSigningKey("[B@1d9af731").parseClaimsJws(token);
+            return userService.loadUserByUsername(jws.getBody().getSubject());
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
