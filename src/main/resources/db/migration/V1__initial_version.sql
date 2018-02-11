@@ -1,6 +1,7 @@
 CREATE TABLE users
 (
   id                      BIGSERIAL PRIMARY KEY NOT NULL,
+  created                 TIMESTAMP WITHOUT TIME ZONE,
   username                VARCHAR(255)          NOT NULL,
   password                VARCHAR(255)          NOT NULL,
   account_non_expired     BOOLEAN               NOT NULL,
