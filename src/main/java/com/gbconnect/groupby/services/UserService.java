@@ -48,6 +48,7 @@ public class UserService implements UserDetailsService {
 
         return UserResponse
                 .builder()
+                .created(userBuilt.getCreated())
                 .id(userBuilt.getId())
                 .authorities(userBuilt.getAuthorities())
                 .email(userBuilt.getUsername())
@@ -65,6 +66,7 @@ public class UserService implements UserDetailsService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return UserResponse
                 .builder()
+                .created(user.getCreated())
                 .email(user.getUsername())
                 .id(user.getId())
                 .credentialsNonExpired(user.isCredentialsNonExpired())
