@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +38,7 @@ public class UserService implements UserDetailsService {
                 .builder()
                 .authorities(ImmutableList.of(role))
                 .username(user.getEmail())
-                .password(user.getPassword())
+                .password(new BCryptPasswordEncoder().encode(user.getPassword()))
                 .enabled(true)
                 .credentialsNonExpired(true)
                 .accountNonLocked(true)
@@ -57,7 +58,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkPassword(UserDetails user, String password) {
-        return user.getPassword().equals(password);
+        return new BCryptPasswordEncoder().matches(password, user.getPassword());
     }
 
     public UserResponse getCurrentUser() {
