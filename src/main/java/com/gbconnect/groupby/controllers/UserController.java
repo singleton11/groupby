@@ -2,8 +2,8 @@ package com.gbconnect.groupby.controllers;
 
 import com.gbconnect.groupby.domain.Login;
 import com.gbconnect.groupby.domain.Token;
+import com.gbconnect.groupby.domain.User;
 import com.gbconnect.groupby.domain.UserRequest;
-import com.gbconnect.groupby.domain.UserResponse;
 import com.gbconnect.groupby.services.JWTService;
 import com.gbconnect.groupby.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping("/users/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse register(@Valid @RequestBody UserRequest user) {
+    public User register(@Valid @RequestBody UserRequest user) {
         return userService.createUser(user);
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping("/users/profile")
-    public UserResponse getUserProfile() {
+    public User getUserProfile() {
         return userService.getCurrentUser();
     }
 }

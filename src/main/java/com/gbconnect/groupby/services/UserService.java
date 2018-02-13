@@ -3,7 +3,6 @@ package com.gbconnect.groupby.services;
 import com.gbconnect.groupby.domain.Role;
 import com.gbconnect.groupby.domain.User;
 import com.gbconnect.groupby.domain.UserRequest;
-import com.gbconnect.groupby.domain.UserResponse;
 import com.gbconnect.groupby.repositories.RoleRepository;
 import com.gbconnect.groupby.repositories.UserRepository;
 import com.google.common.collect.ImmutableList;
@@ -32,7 +31,7 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findByUsername(s);
     }
 
-    public UserResponse createUser(UserRequest user) {
+    public User createUser(UserRequest user) {
         Role role = this.roleRepository.findByAuthority("ROLE_USER");
         User userBuilt = User
                 .builder()
@@ -44,36 +43,14 @@ public class UserService implements UserDetailsService {
                 .accountNonLocked(true)
                 .accountNonExpired(true)
                 .build();
-        userBuilt = this.userRepository.save(userBuilt);
-
-        return UserResponse
-                .builder()
-                .created(userBuilt.getCreated())
-                .id(userBuilt.getId())
-                .authorities(userBuilt.getAuthorities())
-                .email(userBuilt.getUsername())
-                .accountNonExpired(userBuilt.isAccountNonExpired())
-                .accountNonLocked(userBuilt.isAccountNonLocked())
-                .credentialsNonExpired(userBuilt.isCredentialsNonExpired())
-                .build();
+        return this.userRepository.save(userBuilt);
     }
 
     public boolean checkPassword(UserDetails user, String password) {
         return new BCryptPasswordEncoder().matches(password, user.getPassword());
     }
 
-    public UserResponse getCurrentUser() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return UserResponse
-                .builder()
-                .created(user.getCreated())
-                .email(user.getUsername())
-                .id(user.getId())
-                .credentialsNonExpired(user.isCredentialsNonExpired())
-                .accountNonLocked(user.isAccountNonLocked())
-                .accountNonExpired(user.isAccountNonExpired())
-                .enabled(user.isEnabled())
-                .authorities(user.getAuthorities())
-                .build();
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

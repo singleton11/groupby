@@ -1,5 +1,6 @@
 package com.gbconnect.groupby.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class User implements UserDetails {
     @CreationTimestamp
     private Calendar created;
     private String username;
+    @JsonIgnore
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
