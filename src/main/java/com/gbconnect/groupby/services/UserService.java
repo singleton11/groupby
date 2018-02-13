@@ -2,7 +2,7 @@ package com.gbconnect.groupby.services;
 
 import com.gbconnect.groupby.domain.Role;
 import com.gbconnect.groupby.domain.User;
-import com.gbconnect.groupby.domain.UserRequest;
+import com.gbconnect.groupby.domain.Register;
 import com.gbconnect.groupby.repositories.RoleRepository;
 import com.gbconnect.groupby.repositories.UserRepository;
 import com.google.common.collect.ImmutableList;
@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findByUsername(s);
     }
 
-    public User createUser(UserRequest user) {
+    public User createUser(Register user) {
         Role role = this.roleRepository.findByAuthority("ROLE_USER");
         User userBuilt = User
                 .builder()
