@@ -2,7 +2,7 @@ POST http://localhost:8080/users/register
 Content-Type: application/json
 
 {
-    "email": "betrayer11+1@gmail.com",
+    "email": "betrayer11+3@gmail.com",
     "password": "password"
 }
 
@@ -20,5 +20,9 @@ Content-Type: application/json
 
 GET http://localhost:8080/users/profile
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiZXRyYXllcjExQGdtYWlsLmNvbSIsInJvbGUiOlt7ImlkIjoxLCJhdXRob3JpdHkiOiJST0xFX1VTRVIifV19.z5Wfl8Y7JRW5gzbabJcX18slPw53bvU-lSKfulSO-LmAuCYZq2TOMRyZxca84DqfFKFGjQi3Paux-6ViCkj_Kw
+
+###
+
+GET http://localhost:8080/users
 
 ###

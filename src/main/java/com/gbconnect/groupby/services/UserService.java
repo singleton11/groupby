@@ -31,19 +31,8 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findByUsername(s);
     }
 
-    public User createUser(Register user) {
-        Role role = this.roleRepository.findByAuthority("ROLE_USER");
-        User userBuilt = User
-                .builder()
-                .authorities(ImmutableList.of(role))
-                .username(user.getEmail())
-                .password(new BCryptPasswordEncoder().encode(user.getPassword()))
-                .enabled(true)
-                .credentialsNonExpired(true)
-                .accountNonLocked(true)
-                .accountNonExpired(true)
-                .build();
-        return this.userRepository.save(userBuilt);
+    public User createUser(User user) {
+        return this.userRepository.save(user);
     }
 
     public boolean checkPassword(UserDetails user, String password) {
@@ -52,5 +41,9 @@ public class UserService implements UserDetailsService {
 
     public User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public boolean isUserExists(String email) {
+        return userRepository.existsByUsername(email);
     }
 }
