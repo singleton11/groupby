@@ -6,6 +6,8 @@ import com.gbconnect.groupby.domain.User;
 import com.gbconnect.groupby.services.JWTService;
 import com.gbconnect.groupby.services.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,10 +19,12 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
     private final JWTService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    public UserController(UserService userService, JWTService jwtService) {
+    public UserController(UserService userService, JWTService jwtService, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
     @RequestMapping("/users/register")
@@ -31,6 +35,9 @@ public class UserController {
 
     @RequestMapping("/users/getToken")
     public Token getJWTToken(@Valid @RequestBody Login login) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword())
+        );
         return jwtService.generateToken(login);
     }
 

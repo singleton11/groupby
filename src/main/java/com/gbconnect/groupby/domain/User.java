@@ -67,5 +67,6 @@ public class User implements UserDetails {
     @PrePersist
     public void onPrePersist() {
         password = new BCryptPasswordEncoder().encode(password);
+        enabled = accountNonExpired = accountNonLocked = credentialsNonExpired = true;
     }
 }

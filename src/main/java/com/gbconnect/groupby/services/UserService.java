@@ -1,8 +1,6 @@
 package com.gbconnect.groupby.services;
 
-import com.gbconnect.groupby.domain.Role;
 import com.gbconnect.groupby.domain.User;
-import com.gbconnect.groupby.domain.Register;
 import com.gbconnect.groupby.repositories.RoleRepository;
 import com.gbconnect.groupby.repositories.UserRepository;
 import com.google.common.collect.ImmutableList;
@@ -32,11 +30,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(User user) {
+        user.setAuthorities(ImmutableList.of(roleRepository.findByAuthority("ROLE_USER")));
         return this.userRepository.save(user);
-    }
-
-    public boolean checkPassword(UserDetails user, String password) {
-        return new BCryptPasswordEncoder().matches(password, user.getPassword());
     }
 
     public User getCurrentUser() {
