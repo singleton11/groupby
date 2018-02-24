@@ -1,4 +1,4 @@
-POST http://localhost:8080/users/register
+POST {{host}}/users/register
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/users/getToken
+POST {{host}}/users/getToken
 Content-Type: application/json
 
 {
@@ -18,21 +18,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/users/profile
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiZXRyYXllcjExQGdtYWlsLmNvbSJ9.T8u2IOoo8rrjo4Qgm6wCnCyFHx8e-z9nGB92JNES8HDN8HZ4CBoM8lpeSpmZey0wHPaMG8gEZLEEdeWHnnv15g
-
-###
-
-GET http://localhost:8080/users
-
-###
-
-POST http://localhost:8080/login
-Content-Type: application/json
-
-{
-    "email": "betrayer11@gmail.com",
-    "password": "password"
-}
+GET {{host}}/users/profile
+Authorization: Bearer {{jwt}}
 
 ###
