@@ -1,4 +1,4 @@
-package com.gbconnect.groupby.repositories;
+package com.gbconnect.groupby.persistence;
 
 import com.gbconnect.groupby.domain.Role;
 import org.springframework.data.repository.CrudRepository;
