@@ -2,6 +2,7 @@ package com.gbconnect.groupby.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gbconnect.groupby.enums.StopRule;
+import com.gbconnect.groupby.util.validators.GreaterThanNow;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +11,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -41,6 +44,7 @@ public class Group {
     /**
      * Time when group should finish to gather users
      */
+    @GreaterThanNow
     private Calendar timeToFinish;
 
     /**
