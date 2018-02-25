@@ -48,7 +48,6 @@ public class User implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
-
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Role> authorities;
 
