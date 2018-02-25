@@ -2,7 +2,7 @@ POST {{host}}/users/register
 Content-Type: application/json
 
 {
-    "email": "betrayer11+1@gmail.com",
+    "email": "betrayer11@gmail.com",
     "password": "password"
 }
 
@@ -20,5 +20,17 @@ Content-Type: application/json
 
 GET {{host}}/users/profile
 Authorization: Bearer {{jwt}}
+
+###
+POST {{host}}/groups
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+    "numberOfUsers": 5,
+    "amount": 1000,
+    "timeToFinish": 1000000,
+    "stopRule": "MANUAL"
+}
 
 ###

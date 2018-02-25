@@ -35,17 +35,16 @@ CREATE TABLE user_role
   CONSTRAINT user_role_roles_id_fk FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
-CREATE TYPE STOP_RULE AS ENUM ('manual', 'time', 'users', 'hybrid');
-
 CREATE TABLE groups
 (
-  id             BIGSERIAL PRIMARY KEY    NOT NULL,
-  created        TIMESTAMP WITH TIME ZONE NOT NULL,
-  amount         BIGINT                   NOT NULL,
-  time_to_finish TIMESTAMP WITH TIME ZONE,
-  stop_rule      STOP_RULE                NOT NULL,
-  owner          BIGINT,
-  CONSTRAINT groups_users_id_fk FOREIGN KEY (owner) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
+  id              BIGSERIAL PRIMARY KEY    NOT NULL,
+  created         TIMESTAMP WITH TIME ZONE NOT NULL,
+  amount          BIGINT                   NOT NULL,
+  time_to_finish  TIMESTAMP WITH TIME ZONE,
+  number_of_users INTEGER                  NOT NULL,
+  stop_rule       VARCHAR(255)             NOT NULL,
+  owner_id        BIGINT,
+  CONSTRAINT groups_users_id_fk FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE UNIQUE INDEX groups_id_uindex
   ON groups (id);

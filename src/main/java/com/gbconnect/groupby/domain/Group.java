@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -50,7 +51,7 @@ public class Group {
     private StopRule stopRule;
 
     @ManyToOne
-    @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private User owner;
 
     @ManyToMany
@@ -59,5 +60,11 @@ public class Group {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")}
     )
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<User> users;
+
+    @PrePersist
+    public void onPrePersist() {
+        owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 }
