@@ -34,3 +34,17 @@ Content-Type: application/json
 }
 
 ###
+GET {{host}}/users1
+Authorization: Bearer {{jwt}}
+
+###
+POST {{host}}/users1
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+    "email": "lol@mail.ru",
+    "password": ""
+}
+
+###
